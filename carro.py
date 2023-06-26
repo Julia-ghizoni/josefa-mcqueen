@@ -1,22 +1,23 @@
 import mysql.connector 
 conexao = mysql.connector.connect(
     host = "localhost",
-    user = "host",
-    password = "",
-    database = "" 
+    user = "juliagh",
+    password = "Carrovelho30",
+    database = "josefa" 
 )
+cursor = conexao.cursor()
 def cadastroCarro(modelo,fabricante,ano,combustivel,porte,cambio,portas,ocupantes):
     cursor=conexao.cursor()
-    sql=f"INSERT INTO locadora(modelo,fabricante,ano,combustivel,porte,cambio,portas,ocupantes) VALUES ('{modelo}','{fabricante}','{ano}','{combustivel},{porte},{cambio},{portas},{ocupantes}')"
+    sql=f"INSERT INTO carro(modelo,fabricante,ano,combustivel,porte,cambio,portas,ocupantes) VALUES ('{modelo}','{fabricante}',{ano},'{combustivel}',{porte},'{cambio}',{portas},{ocupantes})"
     cursor.execute(sql)
     conexao.commit()
 
 def exibirCarro():
     cursor = conexao.cursor()
-    cursor.execute("SELECT * FROM Locadora")
-    local = cursor.fetchall()
-    for locadora in locadoras:
-        print(locadora)
+    cursor.execute("SELECT * FROM carro")
+    carros= cursor.fetchall()
+    for carro in carros:
+        print(carro)
 
 def atualizarCarro(idlocadoras,modelo,ano,cambio):
     cursor = conexao.cursor()
@@ -27,7 +28,7 @@ def atualizarCarro(idlocadoras,modelo,ano,cambio):
 
 def excluirCarro():
     cursor = conexao.cursor()
-    sql = f"DELETE FROM Locadora WHERE id=2"
+    sql = f"DELETE FROM Carro WHERE id=2"
     cursor.execute(sql)
     conexao.commit()
     print("O carro foi excluído com sucesso!")
@@ -51,15 +52,16 @@ def menu():
             cambio=input("Digite o câmbio do carro:\n")
             portas=input("Digite a quantas portas tem o carro:\n")
             ocupantes=input("Digite quantas ocuapntes o carro suporta:\n")
-            cadastrocarro(modelo, fabricante, ano, combustivel, porte, cambio, portas, ocupantes)
+            cadastroCarro(modelo,fabricante,ano,combustivel,porte,cambio,portas,ocupantes)
+        
         elif opcao == "2":
             exibirCarro()
         elif opcao == "3":
-            idLocadora= int(input("Digite o ID do carro ao ser atualizado: "))
+            idCarro= int(input("Digite o ID do carro ao ser atualizado: "))
             modelo= input("Digite o novo modelo do carro: ")
             ano= input("Digite o novo ano do carro: ")
             cambio=input("Digite o câmbio do carro:")
-            atualizarCarro(idLocadora, modelo, ano, cambio)
+            atualizarCarro(idCarro, modelo, ano, cambio)
         elif opcao == "4":
             modelo= int(input("Digite o modelo do carro a ser excluído: "))
             excluirCarro()
