@@ -1,9 +1,9 @@
 import mysql.connector 
 conexao = mysql.connector.connect(
     host = "localhost",
-    user = "juliagh",
-    password = "Carrovelho30",
-    database = "josefa" 
+    user = "root",
+    password = "",
+    database = "" 
 )
 cursor = conexao.cursor()
 def cadastroCarro(modelo,fabricante,ano,combustivel,porte,cambio,portas,ocupantes):
