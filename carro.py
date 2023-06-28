@@ -1,9 +1,9 @@
 import mysql.connector 
 conexao = mysql.connector.connect(
     host = "localhost",
-    user = "root",
+    user = "",
     password = "",
-    database = "" 
+    database = "josefa" 
 )
 cursor = conexao.cursor()
 def cadastroCarro(modelo,fabricante,ano,combustivel,porte,cambio,portas,ocupantes):
@@ -19,9 +19,9 @@ def exibirCarro():
     for carro in carros:
         print(carro)
 
-def atualizarCarro(idlocadoras,modelo,ano,cambio):
+def atualizarCarro(idlocadoras,modelo,ano,porte,cambio,):
     cursor = conexao.cursor()
-    sql = f"UPDATE locadora SET modelo = '{modelo}', ano = '{ano}',cambio {cambio}, WHERE id = {idLocadora}"
+    sql = f"UPDATE locadora SET modelo = '{modelo}', ano = '{ano}',porte {porte},cambio {cambio}, WHERE id = {idCarro}"
     cursor.execute(sql)
     conexao.commit()
     print("O carro foi atualizado com sucesso!")
@@ -57,13 +57,14 @@ def menu():
         elif opcao == "2":
             exibirCarro()
         elif opcao == "3":
-            idCarro= int(input("Digite o ID do carro ao ser atualizado: "))
+            idCarro= input("Digite o ID do carro ao ser atualizado: ")
             modelo= input("Digite o novo modelo do carro: ")
-            ano= input("Digite o novo ano do carro: ")
+            ano= int(input("Digite o novo ano do carro: "))
+            porte=int(input("Digiti o porte do carro:"))
             cambio=input("Digite o câmbio do carro:")
-            atualizarCarro(idCarro, modelo, ano, cambio)
+            atualizarCarro(idCarro, modelo, ano,porte,cambio)
         elif opcao == "4":
-            modelo= int(input("Digite o modelo do carro a ser excluído: "))
+            modelo= input("Digite o modelo do carro a ser excluído: ")
             excluirCarro()
         elif opcao == "0":
             break
