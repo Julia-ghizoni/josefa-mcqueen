@@ -3,12 +3,12 @@ conexao = mysql.connector.connect(
     host = "localhost",
     user = "",
     password = "",
-    database = "josefa" 
+    database = "" 
 )
 cursor = conexao.cursor()
-def cadastroCarro(modelo,fabricante,ano,combustivel,porte,cambio,portas,ocupantes):
+def cadastroCarro(modelo,fabricante,ano,combustivel,porte,cambio,portas,ocupantes,valor):
     cursor=conexao.cursor()
-    sql=f"INSERT INTO carro(modelo,fabricante,ano,combustivel,porte,cambio,portas,ocupantes) VALUES ('{modelo}','{fabricante}',{ano},'{combustivel}',{porte},'{cambio}',{portas},{ocupantes})"
+    sql=f"INSERT INTO carro(modelo,fabricante,ano,combustivel,porte,cambio,portas,ocupantes) VALUES ('{modelo}','{fabricante}',{ano},'{combustivel}',{porte},'{cambio}',{portas},{ocupantes},{valor})"
     cursor.execute(sql)
     conexao.commit()
 
@@ -19,18 +19,19 @@ def exibirCarro():
     for carro in carros:
         print(carro)
 
-def atualizarCarro(idlocadoras,modelo,ano,porte,cambio,):
+def atualizarCarro(idCarro,modelo,ano,porte,cambio,valor):
     cursor = conexao.cursor()
-    sql = f"UPDATE locadora SET modelo = '{modelo}', ano = '{ano}',porte {porte},cambio {cambio}, WHERE id = {idCarro}"
+    sql = f"UPDATE carro SET modelo = '{modelo}', ano = '{ano}',porte {porte},cambio {cambio},valor{valor} WHERE id = {idCarro}"
     cursor.execute(sql)
     conexao.commit()
     print("O carro foi atualizado com sucesso!")
 
 def excluirCarro():
     cursor = conexao.cursor()
-    sql = f"DELETE FROM Carro WHERE id=2"
+    sql = f"DELETE FROM carro WHERE id=2"
     cursor.execute(sql)
     conexao.commit()
+
     print("O carro foi excluído com sucesso!")
 
 def menu():
@@ -52,7 +53,8 @@ def menu():
             cambio=input("Digite o câmbio do carro:\n")
             portas=input("Digite a quantas portas tem o carro:\n")
             ocupantes=input("Digite quantas ocuapntes o carro suporta:\n")
-            cadastroCarro(modelo,fabricante,ano,combustivel,porte,cambio,portas,ocupantes)
+            valor=input("Digite o valor do aluguel?")
+            cadastroCarro(modelo,fabricante,ano,combustivel,porte,cambio,portas,ocupantes,valor)
         
         elif opcao == "2":
             exibirCarro()
@@ -60,9 +62,10 @@ def menu():
             idCarro= input("Digite o ID do carro ao ser atualizado: ")
             modelo= input("Digite o novo modelo do carro: ")
             ano= int(input("Digite o novo ano do carro: "))
-            porte=int(input("Digiti o porte do carro:"))
+            porte=int(input("Digite o porte do carro:"))
             cambio=input("Digite o câmbio do carro:")
-            atualizarCarro(idCarro, modelo, ano,porte,cambio)
+            valor=float(input("Digite o novo valor do aluguel:"))
+            atualizarCarro(idCarro, modelo, ano,porte,cambio,valor)
         elif opcao == "4":
             modelo= input("Digite o modelo do carro a ser excluído: ")
             excluirCarro()
